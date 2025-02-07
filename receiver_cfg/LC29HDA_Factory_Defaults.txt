@@ -1,0 +1,26 @@
+# Enables/disables the locking of sleep mode. The CPU core will lock into the sleep
+# mode after the command is sent.
+# $PAIR382,1*2E
+$PAIR382,1
+
+# Powers off the GNSS system, including DSP, RF, PE and clock.
+# $PAIR003*39
+$PAIR003
+
+# Notes from the PAIR002 and PAIR003 Commands: Wait more than two seconds before
+# powering on/off the GNSS system to avoid system anomalies.
+#SLEEP# 2000
+
+# Restore factory defaults
+# $PQTMRESTOREPAR*13
+$PQTMRESTOREPAR
+
+# Clear the current configuration and restore the default settings.
+# $PAIR514*3A
+$PAIR514
+
+# Powers on the GNSS system, including DSP, RF, PE and clock.
+# $PAIR002*38
+$PAIR002
+
+# Needs a reboot to take effect

@@ -1,0 +1,77 @@
+# Sets/gets the receiver working mode.
+# 0 = Unknown.
+# 1 = Rover. When set the module to this mode, the receiver will restore to
+#     default NMEA messages output state.
+# 2 = Base station. When set the module to this mode, the receiver will
+#     automatically disable NMEA messages output and enable RTCM MSM4,
+#     1005 messages output.
+#
+# Current versions of LC29H firmware won't save RTCM MSM7 output when in
+# base mode, so we will use "Unknown" mode and then turn on what we want.
+# $PQTMCFGRCVRMODE,W,0*2B
+#
+# $PQTMCFGRCVRMODE,W,1*2A
+# $PQTMCFGRCVRMODE,W,2*29
+#
+# To check: 
+# $PQTMCFGRCVRMODE,R*32
+#
+$PQTMCFGRCVRMODE,W,0 
+
+# Sets navigation mode.
+# 0 = Normal mode. This mode is a basic mode. It is applied to most of
+#  scenarios. (for example, driving scenario).
+# 4 = Stationary mode. For stationary applications where zero dynamics is
+#  assumed.
+# $PAIR080,0*2E
+# $PAIR080,4*2A
+#
+# To check: 
+# $PAIR081*33
+#
+$PAIR080,4
+
+
+# Sets RTCM output mode.
+# -1 = Disable outputting RTCM
+# 0 = Enable output RTCM3 with message type MSM4
+# 1 = Enable output RTCM3 with message type MSM7
+# 
+# $PAIR432,-1*0F
+# $PAIR432,0*23
+# $PAIR432,1*22
+#
+# To check: 
+# $PAIR433*3E
+#
+$PAIR432,1
+
+# Enables/disables outputting stationary antenna reference point in RTCM format.
+# RTCM3 Message 1005
+#
+# $PAIR434,0*25
+# $PAIR434,1*24
+#
+# To check: 
+# $PAIR435*38
+#
+$PAIR434,1
+
+# Enables/disables outputting satellite ephemeris in RTCM format.
+# RTCM3 Messages 1019, 1020, 1042, 1044, 1046
+$PAIR436,1
+
+# Sets/gets the message output rate on the current port.
+#  First number is the rate in 'per N position fixes'
+#  Second number is message version. Usually 1, but PQTMEPE is 2
+#
+# PQTMEPE - Outputs the estimated positioning error.
+# PQTMSVINSTATUS - Outputs the survey-in status.
+# PQTMDOP - Outputs dilution of precision.
+# $PQTMCFGMSGRATE,W,PQTMEPE,1,2*1D
+# $PQTMCFGMSGRATE,W,PQTMSVINSTATUS,20,1*6B
+# $PQTMCFGMSGRATE,W,PQTMDOP,20,1*26
+
+$PQTMCFGMSGRATE,W,PQTMEPE,1,2
+$PQTMCFGMSGRATE,W,PQTMSVINSTATUS,20,1
+$PQTMCFGMSGRATE,W,PQTMDOP,20,1

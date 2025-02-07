@@ -1,0 +1,5 @@
+# Sets the baud rate of UART interface.
+# Valid values of interest are 115200, 230400, 460800, 921600, 3000000
+# Default for LC29HDANR11A03S_RSA is 460800
+# $PAIR864,0,0,460800*16
+$PAIR864,0,0,460800

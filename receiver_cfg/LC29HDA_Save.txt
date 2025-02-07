@@ -1,0 +1,34 @@
+# The Quectel LC29H modules have two save commands, one for the Quectel $PQTM commands
+# and one for Airoha $PAIR commands. We should use both every time.
+#
+# From Quectel_LC29H_SeriesLC79HAL_GNSS_Protocol_Specification_V1.4.pdf Page 124 & 125
+#   In case the position fix rate is greater than 1 Hz, power off the GNSS system with
+#   $PAIR382,1*2E and $PAIR003*39 in sequence before sending this command. After sending
+#   $PAIR513*3D, send $PAIR002*38 to re-power the module. This limitation does not apply  #   to fix rate below 1 Hz.
+#
+# Let's put both save commands inside of the commands to stop and then restart GNSS
+
+# Enables/disables the locking of sleep mode. The CPU core will lock into the sleep
+# mode after the command is sent.
+# $PAIR382,1*2E
+$PAIR382,1
+
+# Powers off the GNSS system, including DSP, RF, PE and clock.
+# $PAIR003*39
+$PAIR003
+
+# Saves the configurations into NVM.
+# $PQTMSAVEPAR*5A
+$PQTMSAVEPAR
+
+# Saves the current configurations from RTC RAM to NVM.
+# $PAIR513*3D
+$PAIR513
+
+# Notes from the PAIR002 and PAIR003 Commands: Wait more than two seconds before
+# powering on/off the GNSS system to avoid system anomalies.
+#SLEEP# 2000
+
+# Powers on the GNSS system, including DSP, RF, PE and clock.
+# $PAIR002*38
+$PAIR002

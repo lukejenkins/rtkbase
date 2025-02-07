@@ -13,3 +13,9 @@ if [[ "${receiver}" = "Quectel LC29HBS" ]]; then
   python3 "${BASEDIR}"/tools/nmea.py --file "${BASEDIR}"/receiver_cfg/LC29HBS_Configure.txt /dev/"${com_port}" "${speed}" 3
   echo Configuring Quectel LC29HBS on /dev/"${com_port}" at speed "${speed}"
 fi
+
+if [[ "${receiver}" = "Quectel LC29HDA" ]]; then
+  speed="${com_port_settings%%:*}"
+  python3 "${BASEDIR}"/tools/nmea.py --file "${BASEDIR}"/receiver_cfg/LC29HDA_Configure.txt /dev/"${com_port}" "${speed}" 3
+  echo Configuring Quectel LC29HDA on /dev/"${com_port}" at speed "${speed}"
+fi
