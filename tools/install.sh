@@ -424,7 +424,8 @@ detect_gnss() {
             for port_speed in 3000000 921600 460800 115200 57600 38400 19200 9600; do
                 echo 'DETECTION ON ' $port ' at ' $port_speed
                 # Detect u-blox ZED-F9P receivers
-                if [[ $(python3 "${rtkbase_path}"/tools/ubxtool -f /dev/$port -s $port_speed -p MON-VER -w 5 2>/dev/null) =~ 'ZED-F9P' ]]; then
+                echo '- Check for u-blox ZED-F9P receivers'
+		if [[ $(python3 "${rtkbase_path}"/tools/ubxtool -f /dev/$port -s $port_speed -p MON-VER -w 5 2>/dev/null) =~ 'ZED-F9P' ]]; then
                     detected_gnss[0]=$port
                     detected_gnss[1]='u-blox'
                     detected_gnss[2]=$port_speed
@@ -432,7 +433,8 @@ detect_gnss() {
                     break
                 fi
                 # Detect Quectel LC29H-BS receivers using nmea.py
-                if [[ $(python3 "${rtkbase_path}"/tools/nmea.py --file "${rtkbase_path}"/receiver_cfg/LC29HBS_Version.txt /dev/$port $port_speed 3 2>/dev/null) =~ 'LC29HBS' ]]; then
+                echo '- Check for Quectel LC29H-BS receivers'
+		if [[ $(python3 "${rtkbase_path}"/tools/nmea.py --file "${rtkbase_path}"/receiver_cfg/LC29HBS_Version.txt /dev/$port $port_speed 3 2>/dev/null) =~ 'LC29HBS' ]]; then
                     detected_gnss[0]=$port
                     detected_gnss[1]='LC29H-BS'
                     detected_gnss[2]=$port_speed
@@ -440,7 +442,8 @@ detect_gnss() {
                     break
                 fi
                 # Detect Quectel LC29H-DA receivers using nmea.py
-                if [[ $(python3 "${rtkbase_path}"/tools/nmea.py --file "${rtkbase_path}"/receiver_cfg/LC29HDA_Version.txt /dev/$port $port_speed 3 2>/dev/null) =~ 'LC29HDA' ]]; then
+                echo '- Check for Quectel LC29H-DA receivers'
+		if [[ $(python3 "${rtkbase_path}"/tools/nmea.py --file "${rtkbase_path}"/receiver_cfg/LC29HDA_Version.txt /dev/$port $port_speed 3 2>/dev/null) =~ 'LC29HDA' ]]; then
                     detected_gnss[0]=$port
                     detected_gnss[1]='LC29H-DA'
                     detected_gnss[2]=$port_speed
